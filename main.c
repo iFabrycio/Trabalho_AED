@@ -117,7 +117,7 @@ typedef struct nodo {
   struct nodo * ant; //Endereço do nó anterior
   struct nodo * prox; //Endereço do próximo nó
 }NODO;
-
+ 
 typedef NODO * LISTA;
 
 //____Fim da Area para definição da estrutura de dados
