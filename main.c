@@ -32,7 +32,7 @@ typedef struct nodo_pilha {
   struct nodo_pilha * prox; //Endereço do próximo nó
 }NODO_PILHA;
 
-typedef NODO_PILHA PILHA; //NODE
+typedef NODO_PILHA * PILHA; //NODE * PILHA_ENC
 
 //____Fim da Area para definição da estrutura de dados
 
@@ -57,16 +57,17 @@ void segunda_questao();
 
 
 void cria_pilha(PILHA *p){ 
-    p = NULL;
+    *p = NULL;
 }
-int eh_vazia(PILHA *p){
+
+int eh_vazia(PILHA p){
     return (!p);
 }
+
 void push(PILHA *pp, char *string){
-  int index = 1, *pint;
-  char *found;
+  int index = 0, *pint;
+  char *found, delimiter[2] = ",";
   NODO_PILHA * novo;
-  printf("Que desgraça bixoasdasdasd\n");
   novo = (NODO_PILHA *) malloc (sizeof(NODO_PILHA));
 
   if(!novo){
@@ -75,8 +76,7 @@ void push(PILHA *pp, char *string){
   }
 
   pint = &novo->epidemiological_week_2019;
-  printf("Done2\n");
-    while(index++, (found = strsep(&string, ",")) != NULL){
+    while(++index, (found = strsep(&string, delimiter)) != NULL){
       if(!strcmp(found, ""))
         found = "0";
       
@@ -89,45 +89,46 @@ void push(PILHA *pp, char *string){
         pint++;
       }
     }
-    novo->prox = p;
-    p = novo;
+
+    novo->prox = *pp;
+    *pp = (PILHA)novo;
+    printf("%s > %s\n", novo->prox->date, (*pp)->date);
 }
 void top_pop (PILHA *p, char state[3], char date[11] ){
 
-  if(!p){
+  if(!(*p)){
     printf("\n\n Pilha vazia.");
     exit(501);
   }
 
-  printf("passou aqui carai");
+  printf("passou aqui carai\n");
 
-  while(!(!strcmp(p->state, state) && !strcmp(p->date, date))){
+  while(!(!strcmp((*p)->state, state) && !strcmp((*p)->date, date))){
 
-    if(!p){
+    if(!(*p)){
       printf("\nDados não encontrado na PILHA.\n");
       exit(502);
     }
     
-    p = p->prox;
+    *p = (*p)->prox;
   }
   
 }
+
 void mass_storage_pilha(FILE *fp, PILHA pilha){
   int tamLinha = 900, c = 4, first = 1;
   char *string, linha[tamLinha];
-   printf("Que desgraça bixo\n");
 
- while(fgets(linha, tamLinha, fp)) { 
+  while(fgets(linha, tamLinha, fp)) { 
 
     string = strdup(linha);     
     if(first == 1){
       first = 0;
       continue;
     }
-      printf("Que desgraça bixo\n");
-
-    push(&pilha, string);
-    printf("Done\n");  
+      printf("Done\n");  
+      push(&pilha, string);
+    
     }
 }
 
@@ -332,7 +333,10 @@ int main(void) {
   printf("\nArmazenamento em Lista Circular Duplamente Encadeada concluída:\n");
   printf("Tempo decorrido: %.5fms\n\n\n", (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC);
 
+  fp = readFile();
+
   start = clock();
+  printf("Chegou aqui ein\n");
   mass_storage_pilha(fp, pilha);
   stop = clock();
 
