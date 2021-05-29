@@ -1,0 +1,79 @@
+ Considerando a relevância dos conceitos associados a algoritmos e estrutura de dados em
+uma formação sólida de profissionais da área da computação, este trabalho visa explorar o
+potencial prático da disciplina em questão, consolidando, assim, a compreensão dos tópicos
+trabalhados na mesma.
+ Os conceitos estudados na disciplina Algoritmos e Estrutura de Dados I (AEDI)
+constituem-se em um conjunto de “ferramentas” que devem ser utilizadas adequadamente
+para solucionar, ou melhor, tornar mais eficientes, soluções para problemas em geral.
+Identificar onde aplicar e como aplicar os conceitos estudados é tão relevante quanto
+compreender o funcionamento e saber implementar as estruturas de dados estudadas.
+ Infelizmente, vivemos a pandemia do COVID19, a maior do último século, a qual tem
+gerando uma grande gama de dados.
+ Com base nas premissas anteriores, este trabalho propõe a aplicação dos conceitos
+estudados na disciplina AEDI na gerência/manipulação dos dados da pandemia de
+COVID19.
+
+ O trabalho deve ser realizado em duplas (duplas podem ser formadas por alunos de
+turmas diferentes). Cada dupla deve implementar um programa na Linguagem de
+Programação C que fará uso das estruturas de dados trabalhadas na disciplina para
+armazenar e manipular os dados sobre COVID19 disponíveis no site
+https://brasil.io/dataset/covid19/files/ relacionados a óbitos registrados em cartório.
+ Sendo mais especifico o programa deve fazer a leitura de um arquivo no formato CSV,
+denominado obito_cartorio.csv, contendo os seguintes dados:
+data,
+estado, 
+semana epidemiológica 2019, 
+semana epidemiológica 2020, 
+óbitos indeterminados 2019, 
+óbitos por insuficiência respiratória 2019, 
+outros óbitos 2019, 
+óbitos pneumonia 2019, 
+óbitos septicemia 2019, 
+óbitos sars 2019, 
+óbitos covid19, 
+óbitos indeterminados 2020, 
+óbitos insuficiência respiratória 2020, 
+outros óbitos 2020,
+mortes por pneumonia 2020, 
+mortes septicemia 2020, 
+mortes sars 2020, 
+mortes totais 2019, 
+mortes totais 2020, 
+novas mortes indeterminadas 2019, 
+novas mortes por insuficiência respiratória 2019, 
+novas outras mortes 2019, 
+novas mortes por pneumonia 2019, 
+novas mortes septicemia 2019, 
+novas mortes sars 2019, 
+novas mortes covid19, 
+novas mortes indeterminadas em 2020, 
+novas mortes por insuficiência respiratória 2020, 
+novas outras mortes 2020, 
+novas mortes pneumonia 2020, 
+novas mortes septicemia 2020, 
+novas mortes sars 2020, 
+novas mortes totais 2019, 
+novas mortes totais 2020
+
+
+ Os dados lidos devem ser armazenados simultaneamente nas estruturas de dados
+trabalhadas na disciplina, ou seja, todos os dados devem ser armazenados em uma lista, em
+uma fila, em uma pilha e em uma árvore AVL.
+ Posteriormente o programa deve oferecer um menu com as seguintes opções para o
+usuário:
+1 - Efetuar uma busca pelos dados referentes a uma determinada data e um estado,
+apresentando os mesmos na saída padrão;
+2 - Efetuar a busca pela data e local de ocorrência do pico de óbitos por COVID19 no ano
+de 2019 e no ano de 2020, apresentando os mesmos na saída padrão.
+ Observação: As saídas das opções 1 e 2 devem ser apresentadas junto com os tempos em
+milissegundos correspondestes à realização da respectiva operação em cada uma das
+estruturas de dados utilizadas.
+ Cada equipe deverá enviar, até o dia 09 de junho (para a turma C2) e até o dia 10 de
+junho (para a turma X2), por meio da plataforma Moodle (AVA), o código fonte, na
+linguagem de programação C padrão ANSI, que implementa a solução desenvolvida.
+Enviando, também, um relatório que apresente a descrição da equipe, contemplando ações
+desenvolvidas pelos membros, o detalhamento da proposta. Cada equipe deve desenvolver
+a gravação de um vídeo com duração máxima de 30 min, contendo a apresentação da
+proposta e contemplando a execução do programa com demonstração das suas
+funcionalidades. O relatório deve conter o link para o vídeo que pode estar, por exemplo,
+disponível no YouTube. 
