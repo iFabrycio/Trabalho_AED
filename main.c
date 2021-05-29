@@ -4,6 +4,20 @@
 #include <string.h>
 #include <time.h>
 
+//________Area para definição da estrutura de dados
+//____Lista
+typedef struct nodo {
+  int length;
+  char date[11]; //00-00-0000
+  char state[3];//PE
+  int epidemiological_week_2019, epidemiological_week_2020, deaths_indeterminate_2019, deaths_respiratory_failure_2019,deaths_others_2019, deaths_pneumonia_2019, deaths_septicemia_2019, deaths_sars_2019, deaths_covid19, deaths_indeterminate_2020, deaths_respiratory_failure_2020,deaths_others_2020, deaths_pneumonia_2020, deaths_septicemia_2020, deaths_sars_2020, deaths_total_2019, deaths_total_2020, new_deaths_indeterminate_2019, new_deaths_respiratory_failure_2019, new_deaths_others_2019, new_deaths_pneumonia_2019, new_deaths_septicemia_2019, new_deaths_sars_2019, new_deaths_covid19, new_deaths_indeterminate_2020, new_deaths_respiratory_failure_2020, new_deaths_others_2020, new_deaths_pneumonia_2020, new_deaths_septicemia_2020, new_deaths_sars_2020, new_deaths_total_2019, new_deaths_total_2020;
+
+
+  struct nodo * ant; //Endereço do nó anterior
+  struct nodo * prox; //Endereço do próximo nó
+}NODO;
+ 
+typedef NODO * LISTA;
 
 //___Pilha
 typedef struct nodo_pilha {
@@ -17,25 +31,38 @@ typedef struct nodo_pilha {
   // struct nodo_pilha * ant; //Endereço do nó anterior
   struct nodo_pilha * prox; //Endereço do próximo nó
 }NODO_PILHA;
-typedef NODO_PILHA PILHA;
+
+typedef NODO_PILHA PILHA; //NODE
+
+//____Fim da Area para definição da estrutura de dados
+
 
 void cria_pilha(PILHA *);
-int eh_vazia(PILHA *p);
+int eh_vazia(PILHA);
 void push(PILHA *, char *);
 void top_pop(PILHA *, char[], char[]);
 void mass_storage_pilha(FILE *, PILHA);
 
-void cria_pilha(PILHA *p){ 
-    
 
+FILE * readFile();
+void criar_lista(LISTA *);
+void inserir_lista(LISTA , char *);
+int  recup_lista(LISTA, char[], char[]);
+int  get_pico_lista(LISTA);
+void mass_storage_lista(FILE *, LISTA);
+void primeira_questao(LISTA, PILHA);
+void segunda_questao();
+
+
+
+
+void cria_pilha(PILHA *p){ 
     p = NULL;
 }
-
 int eh_vazia(PILHA *p){
     return (!p);
 }
-
-void push(PILHA *p, char *string){
+void push(PILHA *pp, char *string){
   int index = 1, *pint;
   char *found;
   NODO_PILHA * novo;
@@ -65,7 +92,6 @@ void push(PILHA *p, char *string){
     novo->prox = p;
     p = novo;
 }
-
 void top_pop (PILHA *p, char state[3], char date[11] ){
 
   if(!p){
@@ -86,7 +112,6 @@ void top_pop (PILHA *p, char state[3], char date[11] ){
   }
   
 }
-
 void mass_storage_pilha(FILE *fp, PILHA pilha){
   int tamLinha = 900, c = 4, first = 1;
   char *string, linha[tamLinha];
@@ -106,29 +131,6 @@ void mass_storage_pilha(FILE *fp, PILHA pilha){
     }
 }
 
-//________Area para definição da estrutura de dados
-typedef struct nodo {
-  int length;
-  char date[11]; //00-00-0000
-  char state[3];//PE
-  int epidemiological_week_2019, epidemiological_week_2020, deaths_indeterminate_2019, deaths_respiratory_failure_2019,deaths_others_2019, deaths_pneumonia_2019, deaths_septicemia_2019, deaths_sars_2019, deaths_covid19, deaths_indeterminate_2020, deaths_respiratory_failure_2020,deaths_others_2020, deaths_pneumonia_2020, deaths_septicemia_2020, deaths_sars_2020, deaths_total_2019, deaths_total_2020, new_deaths_indeterminate_2019, new_deaths_respiratory_failure_2019, new_deaths_others_2019, new_deaths_pneumonia_2019, new_deaths_septicemia_2019, new_deaths_sars_2019, new_deaths_covid19, new_deaths_indeterminate_2020, new_deaths_respiratory_failure_2020, new_deaths_others_2020, new_deaths_pneumonia_2020, new_deaths_septicemia_2020, new_deaths_sars_2020, new_deaths_total_2019, new_deaths_total_2020;
-
-
-  struct nodo * ant; //Endereço do nó anterior
-  struct nodo * prox; //Endereço do próximo nó
-}NODO;
- 
-typedef NODO * LISTA;
-
-//____Fim da Area para definição da estrutura de dados
-FILE * readFile();
-void criar_lista(LISTA *);
-void inserir_lista(LISTA , char *);
-int  recup_lista(LISTA, char[], char[]);
-int  get_pico_lista(LISTA);
-void mass_storage_lista(FILE *, LISTA);
-void primeira_questao(LISTA, PILHA);
-void segunda_questao();
 
 
 
@@ -142,7 +144,6 @@ void criar_lista(LISTA *pl){
   (*pl)->length = 0;
   (*pl)->prox = (*pl)->ant = *pl;
 }
-
 void inserir_lista(LISTA l, char *string){
   char *found, delimiter[2] = ",";
   int index = 0, *p;
@@ -180,7 +181,6 @@ void inserir_lista(LISTA l, char *string){
 
 
 }
-
 int recup_lista(LISTA l, char state[3], char date[11]){
   int tamA, tamB;
   tamA = tamB = l->length;
@@ -231,7 +231,6 @@ int recup_lista(LISTA l, char state[3], char date[11]){
 
   return 1;
 }
-
 int get_pico_lista(LISTA l){
   
 
@@ -254,7 +253,6 @@ int get_pico_lista(LISTA l){
 
     return 0;
 }
-//-------------------------------------------------------------
 void mass_storage_lista(FILE *fp, LISTA lista){
   int tamLinha = 900, c = 4, first = 1;
   char *string, linha[tamLinha];
@@ -270,8 +268,10 @@ void mass_storage_lista(FILE *fp, LISTA lista){
     inserir_lista(lista, string);
       
     }
-//-------------------------------------------------------------
+
 }
+
+
 void primeira_questao(LISTA lista, PILHA pilha){
   system("clr || clear");
 
