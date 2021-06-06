@@ -32,9 +32,31 @@ typedef struct nodo_pilha {
   struct nodo_pilha * prox; //Endereço do próximo nó
 }NODO_PILHA;
 
-typedef NODO_PILHA * PILHA; //NODE * PILHA_ENC
+typedef NODO_PILHA * PILHA; 
+
+typedef struct nodo_fila{
+  int inf;
+  struct nodo_fila * next;
+
+}NODO_FILA;
+
+typedef struct{
+  NODO_FILA *INICIO_FILA;
+  NODO_FILA *FIM_FILA;
+
+}DESCRITOR;
+typedef DESCRITOR * FILA;
 
 //____Fim da Area para definição da estrutura de dados
+
+void cria_fila(FILA *);
+int fila_vazia(FILA);
+void inserir_fila(FILA, char *);
+int consultar_fila(FILA);
+void retirar_fila(FILA);
+int consultar_retirar_fila(FILA, char[], char[]);
+void destruir_fila(FILA);
+void mass_storage_fila (FILE *, FILA);
 
 
 void cria_pilha(PILHA *);
@@ -53,9 +75,89 @@ void mass_storage_lista(FILE *, LISTA);
 void primeira_questao(LISTA, PILHA);
 void segunda_questao();
 
+//________________________________________FILA_____________________________________________
+
+void cria_fila(FILA *pf){
+    *pf=(DESCRITOR *) malloc (sizeof(DESCRITOR));
+    if(!*pf){
+        printf("\nErro\n");
+        exit(1);
+    }
+    (*pf)->INICIO_FILA=(*pf)->FIM_FILA=NULL;
+}
+
+int fila_vazia(FILA f){
+    return(f->INICIO_FILA == NULL);
+}
+
+void inserir_fila(FILA f, char *string){
+    NODO_FILA *novo;
+    novo = (NODO_FILA*)malloc (sizeof(NODO_FILA));
+    if(!novo){
+        printf("\nErro\n");
+        exit(2);
+    }
+    //novo->inf = v;
+    novo->next = NULL;
+    if (fila_vazia(f))
+        f->INICIO_FILA=novo;
+    else
+        f->FIM_FILA->next=novo;
+    f->FIM_FILA=novo;
+
+}
+
+int consultar_fila(FILA f){
+    if (!f->INICIO_FILA){
+        printf("\nErro\n");
+        exit(3);
+    }
+    else
+        return (f->INICIO_FILA->inf);
+
+}
+
+void retirar_fila(FILA f){
+    if (!f->INICIO_FILA){
+        printf("\nErro\n");
+        exit(4);
+    }else{
+        NODO_FILA *aux=f->INICIO_FILA;
+        f->INICIO_FILA=f->INICIO_FILA->next;
+        if(!f->INICIO_FILA)
+        f->FIM_FILA=NULL;
+        free(aux);
+    }
+}
 
 
+int consultar_retirar_fila(FILA f, char state[3], char date[11]){
+    if (!f->INICIO_FILA){
+        printf("\nErro\n");
+        exit(5);
+    }else{
+        int v=f->INICIO_FILA->inf;
+        NODO_FILA *aux=f->INICIO_FILA;
+        f->INICIO_FILA=f->INICIO_FILA->next;
+        if(!f->INICIO_FILA)
+            f->FIM_FILA=NULL;
+        free(aux);
+        return(v);
+    }
+}
+void destruir_fila(FILA f){
+    NODO_FILA *aux;
+    while (f->INICIO_FILA){
+        aux=f->INICIO_FILA;
+        f->INICIO_FILA=f->INICIO_FILA->next;
+        free(aux);
+    }
+    free(f);
+}
 
+//___________________________________FIM DA FILA___________________________________________
+//-----------------------------------------------------------------------------------------
+//________________________________________PILHA____________________________________________
 void cria_pilha(PILHA *p){ 
     *p = NULL;
 }
@@ -72,7 +174,7 @@ void push(PILHA *pp, char *string){
 
   if(!novo){
     printf("\n\nMemoria insuficiente.");
-    exit(500);
+    exit(6);
   }
 
   pint = &novo->epidemiological_week_2019;
@@ -90,15 +192,15 @@ void push(PILHA *pp, char *string){
       }
     }
 
-    novo->prox = *pp;
-    *pp = (PILHA)novo;
-    printf("%s > %s\n", novo->prox->date, (*pp)->date);
+    novo->prox = (*pp);
+    pp = &novo;
+    // printf("%s > %s\n", (novo->prox)->, (*pp)->date);
 }
 void top_pop (PILHA *p, char state[3], char date[11] ){
 
-  if(!(*p)){
+  if(!(p)){
     printf("\n\n Pilha vazia.");
-    exit(501);
+    exit(7);
   }
 
   printf("passou aqui carai\n");
@@ -107,7 +209,7 @@ void top_pop (PILHA *p, char state[3], char date[11] ){
 
     if(!(*p)){
       printf("\nDados não encontrado na PILHA.\n");
-      exit(502);
+      exit(8);
     }
     
     *p = (*p)->prox;
@@ -126,21 +228,26 @@ void mass_storage_pilha(FILE *fp, PILHA pilha){
       first = 0;
       continue;
     }
-      printf("Done\n");  
+      
       push(&pilha, string);
-    
+    // printf("Done\n");  
     }
 }
 
+//____________________________________FIM DA PILHA_________________________________________
+//-----------------------------------------------------------------------------------------
+//____________ARVORE AVL
 
 
-
+//____________Fim da arvore
+//-----------------------------------------------------------------------------------------
+//________________________________________LISTA____________________________________________
 void criar_lista(LISTA *pl){
   *pl = (LISTA)malloc(sizeof(NODO));
 
   if(!(*pl)){
     printf("\n\nMEMÓRIA INSUFICIENTE\n\n");
-    exit(1);
+    exit(100);
   }
   (*pl)->length = 0;
   (*pl)->prox = (*pl)->ant = *pl;
@@ -153,7 +260,7 @@ void inserir_lista(LISTA l, char *string){
   novo = (LISTA) malloc(sizeof(NODO));
   if(!novo){
     printf("\n\nMEMÓRIA INSUFICIENTE\n\n");
-    exit(2);
+    exit(102);
   }  
   p = &novo->epidemiological_week_2019; // aqui eu defino a primeira variavel como index 0 do arr
 
@@ -271,8 +378,9 @@ void mass_storage_lista(FILE *fp, LISTA lista){
     }
 
 }
-
-
+//____________________________________FIM DA LISTA__________________________________________
+//-----------------------------------------------------------------------------------------
+//___________________________________PRIMEIRA QUESTAO______________________________________
 void primeira_questao(LISTA lista, PILHA pilha){
   system("clr || clear");
 
@@ -292,15 +400,18 @@ void primeira_questao(LISTA lista, PILHA pilha){
 
   printf("\nBusca em Lista concluída:\n");
   printf("Tempo decorrido: %.5fms\n\n\n", (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC);
-
+printf("\nteste\n");
   start = clock();
   top_pop(&pilha, state, date);
   stop = clock();
 
-  printf("\nBusca em Lista concluída:\n");
+  printf("\nBusca em Pilha concluída:\n");
   printf("Tempo decorrido: %.5fms\n\n\n", (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC);
-
+printf("\nteste\n");
 }
+//_______________________________FIM DA PRIMEIRA QUESTAO___________________________________
+//-----------------------------------------------------------------------------------------
+//___________________________________SEGUNDA QUESTAO_______________________________________
 void segunda_questao(LISTA lista){
   //Aqui devem ser mostrados os picos dos anos de 2019 e 2020
   system("clr || clear");
@@ -311,9 +422,9 @@ void segunda_questao(LISTA lista){
   get_pico_lista(lista);
 
 }
-
-
-
+//_________________________________FIM SEGUNDA QUESTAO_____________________________________
+//-----------------------------------------------------------------------------------------
+//_________________________________________MAIN____________________________________________
 int main(void) {
 
   LISTA lista;
@@ -336,7 +447,7 @@ int main(void) {
   fp = readFile();
 
   start = clock();
-  printf("Chegou aqui ein\n");
+  //printf("Chegou aqui ein\n");
   mass_storage_pilha(fp, pilha);
   stop = clock();
 
@@ -365,7 +476,7 @@ int main(void) {
   else if(res == 2)
     segunda_questao(lista);
   else if(res == 9)
-    exit(200);
+    exit(103);
   else
     printf("Numero Inválido, tente novamente\n");
 
